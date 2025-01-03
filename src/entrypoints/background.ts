@@ -1,5 +1,5 @@
-import { runActions } from "@/lib/actions"
-import { setupTriggers } from "@/lib/triggers"
+import { runActions } from '@/lib/actions'
+import { setupTriggers } from '@/lib/triggers'
 
 async function panic() {
   console.log('Panic!')

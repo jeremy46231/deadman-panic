@@ -1,15 +1,14 @@
-import { KeyboardShortcutTrigger } from "./KeyboardShortcutTrigger"
+import { KeyboardShortcutTrigger } from './KeyboardShortcutTrigger'
+import { Trigger } from './Trigger'
 
-const triggers = [
-  new KeyboardShortcutTrigger(),
-]
+export const allTriggers = [new KeyboardShortcutTrigger()] satisfies Trigger[]
 
 export function setupTriggers(callback: () => void) {
-  triggers.forEach(trigger => {
+  allTriggers.forEach((trigger) => {
     trigger.setup(async () => {
       if (await trigger.isEnabled()) {
         callback()
       }
     })
   })
-} 
+}

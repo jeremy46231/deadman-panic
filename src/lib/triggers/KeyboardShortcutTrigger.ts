@@ -1,4 +1,4 @@
-import { Trigger } from "./Trigger"
+import { Trigger } from './Trigger'
 
 export class KeyboardShortcutTrigger extends Trigger {
   id = 'keyboard-shortcut'

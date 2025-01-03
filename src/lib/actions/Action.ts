@@ -5,13 +5,15 @@ export abstract class Action {
   abstract name: string
 
   async isEnabled() {
-    return true // temp until config is implemented
-    return await storage.getItem<boolean>(`sync:action:${this.id}:enabled`) || false
+    return (
+      (await storage.getItem<boolean>(`sync:action:${this.id}:enabled`)) ||
+      false
+    )
   }
   async setEnabled(enabled: boolean) {
     await storage.setItem(`sync:action:${this.id}:enabled`, enabled)
   }
-  
+
   /** Panic! Run the action. */
   abstract run(): void | Promise<void>
 }
