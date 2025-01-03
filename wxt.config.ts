@@ -6,7 +6,7 @@ export default defineConfig({
   extensionApi: 'chrome',
   modules: ['@wxt-dev/module-svelte'],
   manifest: {
-    // permissions: ['storage'],
+    permissions: ['storage'],
     commands: {
       panicKeyboardShortcut: {
         suggested_key: {
@@ -15,6 +15,6 @@ export default defineConfig({
         description: 'Trigger',
         global: true,
       },
-    }
-  }
+    },
+  },
 })

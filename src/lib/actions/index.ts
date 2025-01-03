@@ -1,15 +1,16 @@
-import { CloseTabsAction } from "./CloseOtherWindows"
-import { TestAction } from "./TestAction"
+import type { Action } from './Action'
+import { TestAction } from './TestAction'
+import { CloseTabsAction } from './CloseTabsAction'
 
 // Add all actions to this list
-const actions = [
+export const allActions = [
   new TestAction(),
-  new CloseTabsAction()
-]
+  new CloseTabsAction(),
+] satisfies Action[]
 
 export async function runActions() {
-  const actionPromises = actions.map(async action => {
-    if (await action.isEnabled()) {
+  const actionPromises = allActions.map(async (action) => {
+    if (await action.enabled.getValue()) {
       return action.run()
     }
   })

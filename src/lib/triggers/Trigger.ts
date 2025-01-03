@@ -1,17 +1,24 @@
+import type { WxtStorageItem } from 'wxt/storage'
+
 export abstract class Trigger {
-  /** Used internally, kebab-case ID */
-  abstract id: string
   /** Display name for the user */
   abstract name: string
 
-  async isEnabled() {
-    return true // temp until config is implemented
-    return await storage.getItem<boolean>(`sync:trigger:${this.id}:enabled`) || false
+  /** Whether or not the trigger is defined */
+  enabled: WxtStorageItem<boolean, {}>
+
+  /** @param id Used internally, kebab-case ID */
+  constructor(public id: string) {
+    this.enabled = storage.defineItem<boolean>(
+      `sync:trigger:${this.id}:enabled`,
+      {
+        fallback: false,
+      }
+    )
   }
-  async setEnabled(enabled: boolean) {
-    await storage.setItem(`sync:trigger:${this.id}:enabled`, enabled)
-  }
-  
-  /** set up the trigger */
-  abstract setup(callback: () => void): void
+
+  /** Set up the trigger */
+  abstract start(callback: () => void): void
+  /** Stop listening for the trigger */
+  abstract stop(): void
 }

@@ -1,12 +1,13 @@
-import { Action } from "./Action"
+import { Action } from './Action'
 
 export class TestAction extends Action {
-  id = 'test-action'
   name = 'Test Action'
+  constructor() {
+    super('test-action')
+  }
 
   run() {
     console.log('Test action ran!')
-    //  sorry openning tabs is interfering with the other one
-    // browser.tabs.create({ url: 'data:text/plain,Test action ran!' })
+    browser.tabs.create({ url: 'data:text/plain,Test action ran!' })
   }
 }

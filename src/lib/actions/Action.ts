@@ -1,17 +1,22 @@
+import type { WxtStorageItem } from 'wxt/storage'
+
 export abstract class Action {
-  /** Used internally, kebab-case ID */
-  abstract id: string
   /** Display name for the user */
   abstract name: string
 
-  async isEnabled() {
-    return true // temp until config is implemented
-    return await storage.getItem<boolean>(`sync:action:${this.id}:enabled`) || false
+  /** Whether or not the action is defined */
+  enabled: WxtStorageItem<boolean, {}>
+
+  /** @param id Used internally, kebab-case ID */
+  constructor(public id: string) {
+    this.enabled = storage.defineItem<boolean>(
+      `sync:action:${this.id}:enabled`,
+      {
+        fallback: false,
+      }
+    )
   }
-  async setEnabled(enabled: boolean) {
-    await storage.setItem(`sync:action:${this.id}:enabled`, enabled)
-  }
-  
+
   /** Panic! Run the action. */
   abstract run(): void | Promise<void>
 }
