@@ -4,6 +4,7 @@ export abstract class Action {
   /** Display name for the user */
   abstract name: string
 
+  default = false
   /** Whether or not the action is defined */
   enabled: WxtStorageItem<boolean, {}>
 
@@ -12,7 +13,7 @@ export abstract class Action {
     this.enabled = storage.defineItem<boolean>(
       `sync:action:${this.id}:enabled`,
       {
-        fallback: false,
+        fallback: this.default,
       }
     )
   }

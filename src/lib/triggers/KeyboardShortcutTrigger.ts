@@ -6,6 +6,8 @@ export class KeyboardShortcutTrigger extends Trigger {
     super('keyboard-shortcut')
   }
 
+  default = true
+
   start(callback: () => void) {
     browser.commands.onCommand.addListener(async (command) => {
       if (

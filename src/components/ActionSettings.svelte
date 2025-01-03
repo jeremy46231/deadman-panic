@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { Trigger } from './triggers/Trigger'
+  import type { Action } from '../lib/actions/Action'
   import { onMount } from 'svelte'
 
-  const { trigger }: { trigger: Trigger } = $props()
+  const { action }: { action: Action } = $props()
 
   let isEnabled = $state(false)
   let hasLoaded = $state(false)
@@ -10,7 +10,7 @@
   let previousValue: boolean
 
   onMount(async () => {
-    isEnabled = await trigger.enabled.getValue()
+    isEnabled = await action.enabled.getValue()
     hasLoaded = true
   })
 
@@ -20,7 +20,7 @@
       previousValue = isEnabled
       isSaving = true
       ;(async () => {
-        await trigger.enabled.setValue(isEnabled)
+        await action.enabled.setValue(isEnabled)
         if (cancelled) return
         isSaving = false
       })()
@@ -29,13 +29,13 @@
   })
 </script>
 
-<span>
+<p>
   <label>
     <input
       type="checkbox"
       bind:checked={isEnabled}
       disabled={!hasLoaded || isSaving}
     />
-    {trigger.name}
+    {action.name}
   </label>
-</span>
+</p>

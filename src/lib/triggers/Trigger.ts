@@ -4,6 +4,7 @@ export abstract class Trigger {
   /** Display name for the user */
   abstract name: string
 
+  default = false
   /** Whether or not the trigger is defined */
   enabled: WxtStorageItem<boolean, {}>
 
@@ -12,7 +13,7 @@ export abstract class Trigger {
     this.enabled = storage.defineItem<boolean>(
       `sync:trigger:${this.id}:enabled`,
       {
-        fallback: false,
+        fallback: this.default,
       }
     )
   }

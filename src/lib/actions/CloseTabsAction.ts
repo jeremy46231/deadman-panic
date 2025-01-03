@@ -1,3 +1,4 @@
+import { domains, safeURL } from '../configOptions'
 import { Action } from './Action'
 const regex_for_test = /(saahild.com|github.com)/
 
@@ -9,19 +10,24 @@ export class CloseTabsAction extends Action {
 
   async run() {
     console.log('Bye bye tabs')
-    
+
+    const domainList = await domains.getValue()
+    const safePage = await safeURL.getValue()
+
     const tabs = await browser.tabs.query({})
-    for (const tab of tabs) {
-      console.log(regex_for_test.test(tab.url!), tab.url, tab.pendingUrl)
-      if (tab.url && tab.url.match(regex_for_test)) {
-        if (tab.active) {
-          // redirect tab
-          browser.tabs.update(tab.id!, {
-            url: `https://motherfuckingwebsite.com/`,
-          })
-        } else {
-          browser.tabs.remove(tab.id!)
-        }
+
+    const tabsToClose = tabs.filter((tab) => {
+      const url = new URL(tab.url!)
+      return !domainList.includes(url.hostname)
+    })
+
+    for (const tab of tabsToClose) {
+      if (tab.active && safePage) {
+        browser.tabs.update(tab.id!, {
+          url: safePage,
+        })
+      } else {
+        browser.tabs.remove(tab.id!)
       }
     }
   }
