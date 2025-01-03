@@ -6,6 +6,7 @@ export class TestAction extends Action {
 
   run() {
     console.log('Test action ran!')
-    browser.tabs.create({ url: 'data:text/plain,Test action ran!' })
+    //  sorry openning tabs is interfering with the other one
+    // browser.tabs.create({ url: 'data:text/plain,Test action ran!' })
   }
 }
