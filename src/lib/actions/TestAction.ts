@@ -1,8 +1,10 @@
 import { Action } from './Action'
 
 export class TestAction extends Action {
-  id = 'test-action'
   name = 'Test Action'
+  constructor() {
+    super('test-action')
+  }
 
   run() {
     console.log('Test action ran!')

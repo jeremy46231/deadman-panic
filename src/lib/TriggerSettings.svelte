@@ -10,7 +10,7 @@
   let previousValue: boolean
 
   onMount(async () => {
-    isEnabled = await trigger.isEnabled()
+    isEnabled = await trigger.enabled.getValue()
     hasLoaded = true
   })
 
@@ -20,7 +20,7 @@
       previousValue = isEnabled
       isSaving = true
       ;(async () => {
-        await trigger.setEnabled(isEnabled)
+        await trigger.enabled.setValue(isEnabled)
         if (cancelled) return
         isSaving = false
       })()

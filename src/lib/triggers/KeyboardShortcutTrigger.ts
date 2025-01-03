@@ -1,14 +1,21 @@
 import { Trigger } from './Trigger'
 
 export class KeyboardShortcutTrigger extends Trigger {
-  id = 'keyboard-shortcut'
   name = 'Keyboard Shortcut'
+  constructor() {
+    super('keyboard-shortcut')
+  }
 
-  setup(callback: () => void) {
-    browser.commands.onCommand.addListener((command) => {
-      if (command === 'panicKeyboardShortcut') {
+  start(callback: () => void) {
+    browser.commands.onCommand.addListener(async (command) => {
+      if (
+        command === 'panicKeyboardShortcut' &&
+        (await this.enabled.getValue())
+      ) {
         callback()
       }
     })
   }
+
+  stop(): void {}
 }

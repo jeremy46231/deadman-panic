@@ -6,7 +6,7 @@ export const allActions = [new TestAction()] satisfies Action[]
 
 export async function runActions() {
   const actionPromises = allActions.map(async (action) => {
-    if (await action.isEnabled()) {
+    if (await action.enabled.getValue()) {
       return action.run()
     }
   })

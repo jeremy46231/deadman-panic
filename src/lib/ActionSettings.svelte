@@ -10,7 +10,7 @@
   let previousValue: boolean
 
   onMount(async () => {
-    isEnabled = await action.isEnabled()
+    isEnabled = await action.enabled.getValue()
     hasLoaded = true
   })
 
@@ -20,7 +20,7 @@
       previousValue = isEnabled
       isSaving = true
       ;(async () => {
-        await action.setEnabled(isEnabled)
+        await action.enabled.setValue(isEnabled)
         if (cancelled) return
         isSaving = false
       })()
