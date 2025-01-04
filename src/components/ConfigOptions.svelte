@@ -56,10 +56,10 @@ docs.google.com"
     ></textarea>
   </label>
   <p>
-    Enter one domain per line. This will be compared against <a
-      href="https://developer.mozilla.org/docs/Web/API/URL/hostname"
-      ><code>url.hostname</code></a
-    >.
+    Enter one domain per line. This will be compared against
+    <a href="https://developer.mozilla.org/docs/Web/API/URL/hostname">
+      <code>url.hostname</code>
+    </a>.
   </p>
 </div>
 
@@ -86,9 +86,14 @@ docs.google.com"
     <input type="text" bind:value={keyboardShortcut} disabled={true} />
   </label>
   <p>
-    This is the keyboard shortcut to trigger a panic. It can be changed <a
-      href="chrome://extensions/shortcuts">here</a
-    >.
+    This is the keyboard shortcut to trigger a panic. It can be changed
+    <a
+      href={import.meta.env.FIREFOX
+        ? 'about:addons'
+        : 'about:extensions/shortcuts'}
+    >
+      here
+    </a>.
   </p>
 </div>
 

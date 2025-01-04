@@ -1,8 +1,12 @@
+import type { Trigger } from './Trigger'
 import { KeyboardShortcutTrigger } from './KeyboardShortcutTrigger'
-import { WindowBlur } from './onWindowBlur'
-import { Trigger } from './Trigger'
+import { WindowBlurTrigger } from './WindowBlurTrigger'
 
-export const allTriggers = [new KeyboardShortcutTrigger(), new WindowBlur()] satisfies Trigger[]
+// Add all triggers to this list
+export const allTriggers = [
+  new KeyboardShortcutTrigger(),
+  new WindowBlurTrigger(),
+] satisfies Trigger[]
 
 export async function setupTriggers(callback: () => void) {
   for (const trigger of allTriggers) {

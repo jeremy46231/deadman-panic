@@ -1,6 +1,5 @@
 import { domains, safeURL } from '../configOptions'
 import { Action } from './Action'
-const regex_for_test = /(saahild.com|github.com)/
 
 export class CloseTabsAction extends Action {
   name = 'Close Tabs'
@@ -9,16 +8,24 @@ export class CloseTabsAction extends Action {
   }
 
   async run() {
-    console.log('Bye bye tabs')
-
     const domainList = await domains.getValue()
     const safePage = await safeURL.getValue()
 
     const tabs = await browser.tabs.query({})
 
+    console.log(domainList, safePage, tabs)
+
     const tabsToClose = tabs.filter((tab) => {
-      const url = new URL(tab.url!)
-      return !domainList.includes(url.hostname)
+      try {
+        const url = new URL(tab.url!)
+        if (!url.hostname) return false
+        return !domainList.some(
+          (domain) =>
+            url.hostname === domain || url.hostname.endsWith('.' + domain)
+        )
+      } catch {
+        return false
+      }
     })
 
     for (const tab of tabsToClose) {
